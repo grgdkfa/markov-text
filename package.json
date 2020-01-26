@@ -1,0 +1,25 @@
+{
+  "name": "markov-text",
+  "version": "1.0.0",
+  "description": "Fiddling with Markov chains",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/grgdkfa/markov-text.git"
+  },
+  "keywords": [
+    "markov",
+    "chain",
+    "text",
+    "generation"
+  ],
+  "author": "grgdkfa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/grgdkfa/markov-text/issues"
+  },
+  "homepage": "https://github.com/grgdkfa/markov-text#readme"
+}
