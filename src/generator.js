@@ -137,8 +137,6 @@ class BinaryGenerator {
 
 		let result = (typeof history == 'string') ? history.split("").map(x => x.charCodeAt(0)) : history;
 
-		//console.log(result.map(x => String.fromCodePoint(x)).join(""));
-
 		while(result.length < length + historySize) {
 			let char = this.getNextChar(result.slice(-order));
 			result.push(char);

@@ -1,23 +1,16 @@
 
-const preprocess = require('./src/preprocessor.js');
 const builder = require('./src/tree-builder.js');
-const BinaryGenerator = require('./src/binary-generator.js');
-const Generator = require('./src/generator.js');
+const BinaryGenerator = require('./src/generator.js');
 
 const http = require('http');
-const https = require('https');
-const crypto = require('crypto');
 const cla = require('command-line-args');
 const querystring = require('querystring');
 const path = require('path');
 const fs = require('fs-extra');
 
-require('dotenv').config();
-
 const options = new cla([
 	{ name: 'input', alias: 'i', type: String, multiple: true },
-    { name: 'port', alias: 'p', type: Number },
-    { name: 'https', type: Boolean }
+    { name: 'port', alias: 'p', type: Number }
 ]);
 
 const generators = {
@@ -26,7 +19,7 @@ const generators = {
 };
 
 if(options.input) {
-    Promise.all(options.input.map(loadFile)).then(results => {
+    Promise.all(options.input.map(loadFile)).then(() => {
         console.log(`Loaded files ${options.input.join(', ')}`);
         run();
     });
@@ -35,21 +28,7 @@ if(options.input) {
 }
 
 function run() {
-    if(options.https) {
-        if(!process.env.KEY || !process.env.CERT) {
-            console.log(`Provide paths to certificate and private key!`);
-            return;
-        }
-        const privateKey = fs.readFileSync(process.env.KEY).toString();
-        const certificate = fs.readFileSync(process.env.CERT).toString();
-        const credentials = {
-            key: privateKey,
-            cert: certificate
-        };
-        https.createServer(credentials, serverFunction).listen(options.port || 9003);
-    } else {
-        http.createServer(serverFunction).listen(options.port || 9003);
-    }
+    http.createServer(serverFunction).listen(options.port || 9003);
     console.log("Server started");
 }
 
@@ -62,9 +41,9 @@ function serverFunction(request, response){
 
     response.setHeader('Access-Control-Allow-Origin', '*');
     response.setHeader('Access-Control-Request-Method', '*');
-    response.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
     response.setHeader('Access-Control-Allow-Headers', '*');
     if ( request.method === 'OPTIONS' ) {
+        response.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
         response.writeHead(200);
         response.end();
         return;
