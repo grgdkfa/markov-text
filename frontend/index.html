@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Генератор</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:image" content="duck.png">
+    <link rel="apple-touch-startup-image" href="duck.png">
+    <meta property="og:title" content="Бредогенератор">
+    <meta property="og:description" content="Генератор текста на марковских цепях. В основном получается фигня, но иногда забавно.">
+    <meta name="twitter:title" content="Бредогенератор">
+    <meta name="twitter:description" content="Генератор текста на марковских цепях. В основном получается фигня, но иногда забавно.">
+    <meta name="twitter:image:src" content="duck.png">
+    <meta name="description" content="Генератор текста на марковских цепях. В основном получается фигня, но иногда забавно.">
+    <meta name="theme-color" content="#f6d365">
+    <meta name="apple-mobile-web-app-status-bar-style" content="translucent">
+</head>
+<body>
+    <div class="app">
+        <header>
+            <div class="settings">
+                <section>
+                    <!-- corpus -->
+                    <label>Текст:</label>
+                    <ul>
+                        <li v-for="c in corpuses">
+                            <label class="one-line"><input type="radio" name="corpus" v-bind:value="c.name" v-model="corpus"> {{c.name}}</label>
+                        </li>
+                    </ul>
+                </section>
+                <section>
+                    <!-- length -->
+                    <label class="one-line">Длина текста:
+                        <input type="number" min="1" max="10000" v-model="length">
+                    </label>
+                    <div class="help">
+                        Сколько знаков генерировать (от 1 до 10&thinsp;000). Длина текста не включает в себя длину стартовой фразы.
+                    </div>
+                </section>
+                <section>
+                    <!-- chain length -->
+                    <label>Длина цепочки: {{order}}
+                            <input type="range" min="1" max="10" v-bind:max="maxOrder" v-model="order">
+                    </label>
+                    <div class="help">
+                        <div class="left">
+                            Менее связный текст, больше вариативности
+                        </div>
+                        <div class="right">
+                            Более связный текст, но много цитат из оригинала
+                        </div>
+                    </div>
+                </section>
+                <section>
+                    <!-- temperature -->
+                    <label>Температура: {{actualTemperature}}
+                            <input type="range" min="0" max="9" v-model="temperature">
+                    </label>
+                    <div class="help">
+                        <div class="left">
+                            Более вероятные последовательности
+                        </div>
+                        <div class="right">
+                            Менее вероятные последовательности
+                        </div>
+                    </div>
+                    <label class="help"><input type="checkbox" v-model="uniform"> Игнорировать вероятности</label>
+                </section>
+            </div>
+            <div class="text-start wrapper">
+                <input class="button" type="text" placeholder="Стартовая фраза (не обязательно)" v-model="start" v-on:keyup.13="fresh">
+                <button class="button primary" v-on:click="fresh">Поехали</button>
+                <button class="button secondary" v-on:click="startRoll">Roll</button>
+            </div>
+            <div class="error wrapper" v-if="error">
+                <strong>Что-то пошло не так и ничего не работает. Пинганите меня.</strong>
+            </div>
+        </header>
+        <main class="content wrapper">
+            <div class="story">{{story}}</div>
+            <div class="more" v-show="story.length">
+                <button v-if="rolling" class="button" v-on:click="stopRoll" ref="stop">Stop</button>
+                <button v-if="!rolling" class="button" v-on:click="more" ref="more">Ещё?</button>
+            </div>
+        </main>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="generator.js"></script>
+</body>
+</html>

@@ -1,0 +1,154 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+label.one-line {
+    white-space: nowrap;
+}
+
+.wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.settings {
+    display: flex;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.settings section {
+    flex: 1 1 10%;
+    margin: 0.5em 1em;
+}
+
+.settings section:first-child {
+    flex-grow: 0;
+}
+
+.settings ul {
+    margin: 0;
+    padding: 0;
+}
+
+.settings li {
+    display: block;
+}
+
+.settings input[type="range"] {
+    width: 100%;
+}
+
+.settings label {
+    display: block;
+    margin-top: 0.5em;
+}
+
+.help {
+    font-size: 80%;
+    color: #aaa;
+    display: flex;
+    justify-content: space-between;
+}
+
+.help .right {
+    text-align: right;
+    margin-left: 0.5em;
+}
+
+.help .left {
+    text-align: left;
+    margin-right: 0.5em;
+}
+
+.text-start {
+    display: flex;
+    margin-top: 20px;
+    padding: 0 10px;
+}
+
+.text-start input {
+    /* font-size: 24px; */
+    flex-grow: 1;
+}
+
+.text-start button {
+    /* font-size: 24px; */
+    margin-left: 10px;
+}
+
+.error {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding: 10px;
+    text-align: center;
+    background: #ff9999;
+}
+
+.more {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.more button {
+    width: 50%;
+    padding: 10px;
+}
+
+.story {
+    white-space: pre-wrap;
+    margin-top: 1.5em;
+    margin-bottom: 1.5em;
+    padding: 0 0.5em;
+    line-height: 1.5;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+.button {
+    background: #fff;
+    border: 1px solid #aaa;
+    border-radius: 0.2em;
+    padding: 10px 20px;
+}
+
+.button.primary {
+    background-color: #f6d365;
+    border-color: #f6d365;
+}
+
+.button.secondary {
+    background-color: #fff5d4;
+    border-color: #fff5d4;
+}
+
+@media (max-width: 800px) {
+    .settings {
+        flex-wrap: wrap;
+    }
+
+    .settings section {
+        flex: 1 1 30%;
+    }
+}
+
+/* input[type=range] {
+    -webkit-appearance: none;
+    background: transparent;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background: #fff;
+    height: 18px;
+    width: 18px;
+    margin-top: -8px;
+    border-radius: 99px;
+  }
+  input[type=range]::-webkit-slider-runnable-track {
+    width: 300px;
+    height: 4px;
+    background: #ddd;
+  } */

@@ -27,8 +27,9 @@ if(options.input) {
 }
 
 function run() {
+    const port = options.port || 9003;
     http.createServer(serverFunction).listen(options.port || 9003);
-    console.log("Server started");
+    console.log(`Server started on port ${port}`);
 }
 
 function serverFunction(request, response){
@@ -45,6 +46,21 @@ function serverFunction(request, response){
         response.setHeader('Access-Control-Allow-Methods', 'OPTIONS, GET');
         response.writeHead(200);
         response.end();
+        return;
+    }
+
+    if(request.url == "/") {
+        request.url = "/index.html";
+    }
+
+    if(fs.existsSync(path.join("frontend", request.url))) {
+        fs.readFile(path.join("frontend", request.url)).then(file => {
+            response.writeHead(200);
+            response.end(file);
+        }).catch(error => {
+            response.writeHead(404);
+            response.end(JSON.stringify(error));
+        });
         return;
     }
 
