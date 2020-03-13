@@ -24,7 +24,7 @@ This is example of nonsense it can make:
 
 ### Memory efficient prefix tree you say?
 
-Yeah, that was kinda reinveting the wheel for fun. Naive implementation (nodes are nested JS objects) has too much overhead - for example, two MiB of text can create a tree with about a million nodes, which takes up more than 2 GiB of RAM. And the node consists just from a single character, number and an array of children - nothing fancy or overengineered. And I wanted to run it on a cheap VPS with 512 MiB RAM!
+Yeah, that was kinda reinveting the wheel for fun. Naive implementation (where nodes are nested JS objects) has too much overhead - for example, two MiB of text can create a tree with about a million nodes, which takes up more than 2 GiB of RAM. And the node consists just from a single character, number and an array of children - nothing fancy or overengineered. And I wanted to run it on a cheap VPS with 512 MiB RAM!
 
 So I just packed everything into Int32Array and thrown in a handful of "pointer" maths. And it ended up pretty neat - same tree can be stored as ~100 MiB array of raw data. Also it doesn't need to be unpacked and can be read directly from file, which is a bonus.
 
@@ -74,7 +74,7 @@ The last option has very little effect, but it may be different for your texts.
 Also, there is little web frontend to play with/show your friends:
 
 ```
-node serve.js text1.ngram text2.ngram text3.ngram -p 9005
+node serve.js -i text1.ngram text2.ngram text3.ngram -p 9005
 ```
 
 `-p` is option for port. You can load multiple trees and select them via web page.
