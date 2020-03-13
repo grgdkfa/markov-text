@@ -75,25 +75,25 @@ class BinaryPreprocessor {
     }
 
     /**
-     * Finds leaf node of a trie for a shingle
-     * @param {String} shingle - ngram to traverse the trie
+     * Finds leaf node of a trie for the ngram
+     * @param {String} ngram - ngram to traverse the trie
      * @returns {Number} pointer to LAST CHAR IN SHINGLE
      */
-    walk(shingle) {
+    walk(ngram) {
         let offset = 0;
-        for(let i=0; i<shingle.length - 1; i++) {
-            offset = this.find(offset, shingle.codePointAt(i));
+        for(let i=0; i<ngram.length - 1; i++) {
+            offset = this.find(offset, ngram.codePointAt(i));
             if(offset < 0) {
-                throw new Error(`Error inserting array for "${shingle}" (${shingle.length}) at position ${i}: no char (1)`);
+                throw new Error(`Error inserting array for "${ngram}" (${ngram.length}) at position ${i}: no char (1)`);
             }
             offset = this.data[offset + POINTER_OFFSET];
-            if(i < shingle.length - 1 && offset == 0) {
-                throw new Error(`Error inserting array for "${shingle}" (${shingle.length}) at position ${i}: no next layer`);
+            if(i < ngram.length - 1 && offset == 0) {
+                throw new Error(`Error inserting array for "${ngram}" (${ngram.length}) at position ${i}: no next layer`);
             }
         }
-        offset = this.find(offset, shingle.codePointAt(shingle.length - 1));
+        offset = this.find(offset, ngram.codePointAt(ngram.length - 1));
         if(offset < 0) {
-            throw new Error(`Error inserting array for "${shingle}" (${shingle.length}) at position ${shingle.length - 1}: no char (2)`);
+            throw new Error(`Error inserting array for "${ngram}" (${ngram.length}) at position ${ngram.length - 1}: no char (2)`);
         }
         return offset;
     }
@@ -127,11 +127,11 @@ class BinaryPreprocessor {
         const map = {}; // temporary map
         order = order - 1;
         for(let i=0; i<text.length - order; i++) {
-            const shingle = text.substr(i, order);
+            const ngram = text.substr(i, order);
             const char = text.charAt(i + order);
-            map[shingle] = map[shingle] || {};
-			map[shingle][char] = map[shingle][char] || 0;
-			map[shingle][char]++;
+            map[ngram] = map[ngram] || {};
+			map[ngram][char] = map[ngram][char] || 0;
+			map[ngram][char]++;
         }
 
         console.log(`Ngrams on layer: ${Object.keys(map).length}`);

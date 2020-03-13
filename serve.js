@@ -1,5 +1,4 @@
 
-const builder = require('./src/tree-builder.js');
 const BinaryGenerator = require('./src/generator.js');
 
 const http = require('http');
